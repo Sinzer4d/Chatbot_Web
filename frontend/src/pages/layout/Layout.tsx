@@ -15,8 +15,8 @@ const Layout = () => {
   const [copyClicked, setCopyClicked] = useState<boolean>(false)
   const [copyText, setCopyText] = useState<string>('Copy URL')
   const [shareLabel, setShareLabel] = useState<string | undefined>('Share')
-  const [hideHistoryLabel, setHideHistoryLabel] = useState<string>('Hide chat history')
-  const [showHistoryLabel, setShowHistoryLabel] = useState<string>('Show chat history')
+  const [hideHistoryLabel, setHideHistoryLabel] = useState<string>('Amagar historial')
+  const [showHistoryLabel, setShowHistoryLabel] = useState<string>('Mostrar historial')
   const [logo, setLogo] = useState('')
   const appStateContext = useContext(AppStateContext)
   const ui = appStateContext?.state.frontendSettings?.ui
