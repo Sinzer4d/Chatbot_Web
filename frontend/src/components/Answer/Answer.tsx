@@ -68,20 +68,22 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
 
   const createCitationFilepath = (citation: Citation, index: number, truncate: boolean = false) => {
     let citationFilename = ''
-
-    if (citation.filepath) {
-      const part_i = citation.part_index ?? (citation.chunk_id ? parseInt(citation.chunk_id) + 1 : '')
-      if (truncate && citation.filepath.length > filePathTruncationLimit) {
-        const citationLength = citation.filepath.length
-        citationFilename = `${citation.filepath.substring(0, 20)}...${citation.filepath.substring(citationLength - 20)} - Part ${part_i}`
-      } else {
-        citationFilename = `${citation.filepath} - Part ${part_i}`
-      }
-    } else if (citation.filepath && citation.reindex_id) {
-      citationFilename = `${citation.filepath} - Part ${citation.reindex_id}`
-    } else {
-      citationFilename = `Citation ${index}`
+    if(citation.title != null) {
+      citationFilename = citation.title
     }
+    // if (citation.filepath) {
+    //   const part_i = citation.part_index ?? (citation.chunk_id ? parseInt(citation.chunk_id) + 1 : '')
+    //   if (truncate && citation.filepath.length > filePathTruncationLimit) {
+    //     const citationLength = citation.filepath.length
+    //     citationFilename = `${citation.filepath.substring(0, 20)}...${citation.filepath.substring(citationLength - 20)} - Part ${part_i}`
+    //   } else {
+    //     citationFilename = `${citation.filepath} - Part ${part_i}`
+    //   }
+    // } else if (citation.filepath && citation.reindex_id) {
+    //   citationFilename = `${citation.filepath} - Part ${citation.reindex_id}`
+    // } else {
+    //   citationFilename = `Citation ${index}`
+    // }
     return citationFilename
   }
 
@@ -309,9 +311,9 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                     tabIndex={0}
                     role="button">
                     <span>
-                      {parsedAnswer.citations.length > 1
-                        ? parsedAnswer.citations.length + ' references'
-                        : '1 reference'}
+                    {parsedAnswer.citations.length > 1
+                      ? parsedAnswer.citations.length + ' referències'
+                      : '1 referència'}
                     </span>
                   </Text>
                   <FontIcon
@@ -324,7 +326,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
             </Stack.Item>
           )}
           <Stack.Item className={styles.answerDisclaimerContainer}>
-            <span className={styles.answerDisclaimer}>AI-generated content may be incorrect</span>
+            <span className={styles.answerDisclaimer}>El contingut generat per IA pot ser incorrecte</span>
           </Stack.Item>
           {!!answer.exec_results?.length && (
             <Stack.Item onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? toggleIsRefAccordionOpen() : null)}>
@@ -337,7 +339,7 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
                     tabIndex={0}
                     role="button">
                     <span>
-                      Show Intents
+                      Mostrar intencions
                     </span>
                   </Text>
                   <FontIcon
@@ -398,14 +400,14 @@ export const Answer = ({ answer, onCitationClicked, onExectResultClicked }: Prop
           showCloseButton: true
         }}>
         <Stack tokens={{ childrenGap: 4 }}>
-          <div>Your feedback will improve this experience.</div>
+        <div>Els teus comentaris milloraran aquesta experiència.</div>
 
           {!showReportInappropriateFeedback ? <UnhelpfulFeedbackContent /> : <ReportInappropriateFeedbackContent />}
 
-          <div>By pressing submit, your feedback will be visible to the application owner.</div>
+          <div>En prémer enviar, els teus comentaris seran visibles per al propietari de l'aplicació.</div>
 
           <DefaultButton disabled={negativeFeedbackList.length < 1} onClick={onSubmitNegativeFeedback}>
-            Submit
+            Enviar
           </DefaultButton>
         </Stack>
       </Dialog>

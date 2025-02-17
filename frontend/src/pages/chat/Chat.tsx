@@ -711,9 +711,11 @@ const Chat = () => {
   }
 
   const onViewSource = (citation: Citation) => {
-    if (citation.url && !citation.url.includes('blob.core')) {
-      window.open(citation.url, '_blank')
-    }
+    console.log(citation)
+    window.open("https://www.bopa.ad/Documents/Detall?doc=" + citation.title, '_blank')
+    // if (citation.url && !citation.url.includes('blob.core')) {
+    //   window.open(citation.url, '_blank')
+    // }
   }
 
   const parseCitationFromMessage = (message: ChatMessage) => {
@@ -856,13 +858,13 @@ const Chat = () => {
                   horizontal
                   className={styles.stopGeneratingContainer}
                   role="button"
-                  aria-label="Stop generating"
+                  aria-label="Para de generar"
                   tabIndex={0}
                   onClick={stopGenerating}
                   onKeyDown={e => (e.key === 'Enter' || e.key === ' ' ? stopGenerating() : null)}>
                   <SquareRegular className={styles.stopGeneratingIcon} aria-hidden="true" />
                   <span className={styles.stopGeneratingText} aria-hidden="true">
-                    Stop generating
+                    Para de generar
                   </span>
                 </Stack>
               )}
@@ -923,7 +925,7 @@ const Chat = () => {
                       : newChat
                   }
                   disabled={disabledButton()}
-                  aria-label="clear chat button"
+                  aria-label="netejar el botó de chat"
                 />
                 <Dialog
                   hidden={hideErrorDialog}
@@ -933,7 +935,7 @@ const Chat = () => {
               </Stack>
               <QuestionInput
                 clearOnSend
-                placeholder="Type a new question..."
+                placeholder="Escriu alguna pregunta..."
                 disabled={isLoading}
                 onSend={(question, id) => {
                   appStateContext?.state.isCosmosDBAvailable?.cosmosDB
@@ -956,7 +958,7 @@ const Chat = () => {
                 horizontalAlign="space-between"
                 verticalAlign="center">
                 <span aria-label="Citations" className={styles.citationPanelHeader}>
-                  Citations
+                  Citacions
                 </span>
                 <IconButton
                   iconProps={{ iconName: 'Cancel' }}

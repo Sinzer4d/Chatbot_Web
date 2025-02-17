@@ -13,8 +13,8 @@ import styles from './Layout.module.css'
 const Layout = () => {
   const [isSharePanelOpen, setIsSharePanelOpen] = useState<boolean>(false)
   const [copyClicked, setCopyClicked] = useState<boolean>(false)
-  const [copyText, setCopyText] = useState<string>('Copy URL')
-  const [shareLabel, setShareLabel] = useState<string | undefined>('Share')
+  const [copyText, setCopyText] = useState<string>('Copiar URL')
+  const [shareLabel, setShareLabel] = useState<string | undefined>('Compartir')
   const [hideHistoryLabel, setHideHistoryLabel] = useState<string>('Amagar historial')
   const [showHistoryLabel, setShowHistoryLabel] = useState<string>('Mostrar historial')
   const [logo, setLogo] = useState('')
@@ -58,12 +58,12 @@ const Layout = () => {
     const handleResize = () => {
       if (window.innerWidth < 480) {
         setShareLabel(undefined)
-        setHideHistoryLabel('Hide history')
-        setShowHistoryLabel('Show history')
+        setHideHistoryLabel('Amagar l\'historial')
+        setShowHistoryLabel('Mostrar l\'historial')
       } else {
-        setShareLabel('Share')
-        setHideHistoryLabel('Amagar historial')
-        setShowHistoryLabel('Mostrar historial')
+        setShareLabel('Compartir')
+        setHideHistoryLabel('Amagar l\'historial')
+        setShowHistoryLabel('Mostrar l\'historial')
       }
     }
 
@@ -115,7 +115,7 @@ const Layout = () => {
           ]
         }}
         dialogContentProps={{
-          title: 'Share the web app',
+          title: "Comparteix l'aplicació",
           showCloseButton: true
         }}>
         <Stack horizontal verticalAlign="center" style={{ gap: '8px' }}>

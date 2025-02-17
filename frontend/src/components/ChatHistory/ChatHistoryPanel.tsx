@@ -52,12 +52,13 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
 
   const clearAllDialogContentProps = {
     type: DialogType.close,
-    title: !clearingError ? 'Are you sure you want to clear all chat history?' : 'Error deleting all of chat history',
-    closeButtonAriaLabel: 'Close',
+    title: !clearingError ? 'Estàs segur que vols esborrar tot l’historial de xat?' : 'Error en esborrar tot l’historial de xat',
+    closeButtonAriaLabel: 'Tanca',
     subText: !clearingError
-      ? 'All chat history will be permanently removed.'
-      : 'Please try again. If the problem persists, please contact the site administrator.'
-  }
+      ? 'Tot l’historial de xat s’eliminarà permanentment.'
+      : 'Si us plau, torna-ho a intentar. Si el problema persisteix, contacta amb l’administrador del lloc.'
+  };
+  
 
   const modalProps = {
     titleAriaId: 'labelId',
@@ -67,7 +68,7 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
   }
 
   const menuItems: IContextualMenuItem[] = [
-    { key: 'clearAll', text: 'Clear all chat history', iconProps: { iconName: 'Delete' } }
+    { key: 'clearAll', text: 'Netejar tot l\'historial de xats', iconProps: { iconName: 'Delete' } }
   ]
 
   const handleHistoryClick = () => {
@@ -116,16 +117,16 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
               marginRight: 'auto',
               paddingLeft: '20px'
             }}>
-            Chat history
+            Historial de xats
           </Text>
         </StackItem>
         <Stack verticalAlign="start">
           <Stack horizontal styles={commandBarButtonStyle}>
             <CommandBarButton
               iconProps={{ iconName: 'More' }}
-              title={'Clear all chat history'}
+              title={'Netejar tot l\'historial de xats'}
               onClick={onShowContextualMenu}
-              aria-label={'clear all chat history'}
+              aria-label={'netejar tot l\'historial de xats'}
               styles={commandBarStyle}
               role="button"
               id="moreButton"
@@ -179,12 +180,12 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
                         {appStateContext?.state.isCosmosDBAvailable?.status && (
                           <span>{appStateContext?.state.isCosmosDBAvailable?.status}</span>
                         )}
-                        {!appStateContext?.state.isCosmosDBAvailable?.status && <span>Error loading chat history</span>}
+                        {!appStateContext?.state.isCosmosDBAvailable?.status && <span>Error carregant l'historial de xats</span>}
                       </Text>
                     </StackItem>
                     <StackItem>
                       <Text style={{ alignSelf: 'center', fontWeight: '400', fontSize: 14 }}>
-                        <span>Chat history can't be saved at this time</span>
+                        <span>L'historial de xats no es pot guardar en aquest moment</span>
                       </Text>
                     </StackItem>
                   </Stack>
@@ -207,7 +208,7 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
                   </StackItem>
                   <StackItem>
                     <Text style={{ alignSelf: 'center', fontWeight: '400', fontSize: 14 }}>
-                      <span style={{ whiteSpace: 'pre-wrap' }}>Loading chat history</span>
+                      <span style={{ whiteSpace: 'pre-wrap' }}>Carregant l'historial de xats</span>
                     </Text>
                   </StackItem>
                 </Stack>
@@ -222,11 +223,11 @@ export function ChatHistoryPanel(_props: ChatHistoryPanelProps) {
         dialogContentProps={clearAllDialogContentProps}
         modalProps={modalProps}>
         <DialogFooter>
-          {!clearingError && <PrimaryButton onClick={onClearAllChatHistory} disabled={clearing} text="Clear All" />}
+          {!clearingError && <PrimaryButton onClick={onClearAllChatHistory} disabled={clearing} text="Netejar tot" />}
           <DefaultButton
             onClick={onHideClearAllDialog}
             disabled={clearing}
-            text={!clearingError ? 'Cancel' : 'Close'}
+            text={!clearingError ? 'Cancel·lar' : 'Tancar'}
           />
         </DialogFooter>
       </Dialog>

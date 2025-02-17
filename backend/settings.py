@@ -20,6 +20,7 @@ from typing import List, Literal, Optional
 from typing_extensions import Self
 from quart import Request
 from backend.utils import parse_multi_columns, generateFilterString
+from datetime import datetime
 
 DOTENV_PATH = os.environ.get(
     "DOTENV_PATH",
@@ -44,8 +45,8 @@ class _UiSettings(BaseSettings):
     title: str = "Contoso"
     logo: Optional[str] = None
     chat_logo: Optional[str] = None
-    chat_title: str = "Start chatting"
-    chat_description: str = "This chatbot is configured to answer your questions"
+    chat_title: str = "Pregunta alguna cosa"
+    chat_description: str = ""
     favicon: str = "/favicon.ico"
     show_share_button: bool = True
     show_chat_history_button: bool = True
@@ -276,7 +277,7 @@ class _AzureSearchSettings(BaseSettings, DatasourcePayloadConstructor):
     authentication: Optional[dict] = None
     embedding_dependency: Optional[dict] = None
     fields_mapping: Optional[dict] = None
-    filter: Optional[str] = Field(default=None, exclude=True)
+    filter: Optional[str] = None # Field(default=None, exclude=True)
     
     @field_validator('content_columns', 'vector_columns', mode="before")
     @classmethod
@@ -316,19 +317,29 @@ class _AzureSearchSettings(BaseSettings, DatasourcePayloadConstructor):
         self.query_type = to_snake(self.query_type)
 
     def _set_filter_string(self, request: Request) -> str:
+        # Filtro de acceso de grupo
         if self.permitted_groups_column:
             user_token = request.headers.get("X-MS-TOKEN-AAD-ACCESS-TOKEN", "")
-            logging.debug(f"USER TOKEN is {'present' if user_token else 'not present'}")
             if not user_token:
                 raise ValueError(
                     "Document-level access control is enabled, but user access token could not be fetched."
                 )
 
             filter_string = generateFilterString(user_token)
-            logging.debug(f"FILTER: {filter_string}")
-            return filter_string
+        else:
+            filter_string = ""
+
+        # Filtro para DataFiPublicacio menor a la fecha actual
+        today = datetime.today().strftime("%Y-%m-%dT%H:%M:%SZ")  # Formato de fecha de Azure Search
+        date_filter = f"DataFiPublicacio ge {today}"
         
-        return None
+        # Combina ambos filtros (si es que existen)
+        if filter_string:
+            filter_string = f"{filter_string} and {date_filter}"
+        else:
+            filter_string = date_filter
+
+        return filter_string
             
     def construct_payload_configuration(
         self,
@@ -336,8 +347,8 @@ class _AzureSearchSettings(BaseSettings, DatasourcePayloadConstructor):
         **kwargs
     ):
         request = kwargs.pop('request', None)
-        if request and self.permitted_groups_column:
-            self.filter = self._set_filter_string(request)
+        # if request and self.permitted_groups_column:
+        self.filter = self._set_filter_string(request)
             
         self.embedding_dependency = \
             self._settings.azure_openai.extract_embedding_dependency()

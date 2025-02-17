@@ -15,7 +15,7 @@
       "args": [
           "run",
           "--no-reload",
-          "-p 50505"
+          "-p 50005"
       ],
       "console": "integratedTerminal",
       "justMyCode": false
@@ -24,7 +24,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Frontend: Launch Chrome debugger",
-      "url": "http://127.0.0.1:50505",
+      "url": "http://127.0.0.1:50005",
       "webRoot": "${workspaceFolder}/frontend",
       "smartStep": true
     }
