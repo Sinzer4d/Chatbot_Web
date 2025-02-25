@@ -1,6 +1,7 @@
 .container {
   max-height: calc(100vh - 100px);
   width: 300px;
+  background-color:#112955
 }
 
 .listContainer {
@@ -45,6 +46,7 @@
 .chatGroup {
   margin: auto 5px;
   width: 100%;
+  color: #ffffff;
 }
 
 .spinnerContainer {
@@ -56,6 +58,7 @@
 
 .chatList {
   width: 100%;
+  color: #ffffff;
 }
 
 .chatMonth {
@@ -63,6 +66,7 @@
   font-weight: 600;
   margin-bottom: 5px;
   padding-left: 15px;
+  color: #ffffff;
 }
 
 .chatTitle {
@@ -70,6 +74,7 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: #ffffff;
 }
 
 @media (max-width: 480px) {
